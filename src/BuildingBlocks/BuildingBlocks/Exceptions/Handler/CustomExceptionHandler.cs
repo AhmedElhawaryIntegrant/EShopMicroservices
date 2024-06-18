@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using FluentValidation;
 namespace BuildingBlocks.Exceptions.Handler
 {
-    internal class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IExceptionHandler
+    public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IExceptionHandler
     {
         public async ValueTask<bool> TryHandleAsync(HttpContext Context, Exception exception, CancellationToken cancellationToken)
         {
