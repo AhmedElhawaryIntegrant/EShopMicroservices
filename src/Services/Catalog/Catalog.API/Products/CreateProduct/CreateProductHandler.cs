@@ -17,16 +17,11 @@ namespace Catalog.API.Products.CreateProduct
         }
     }
 
-    internal class CreateProductCommandHandler(IDocumentSession session,IValidator<CreateProductCommand> validator) : ICommandHandler<CreateProductCommand, CreateProductResult>
+    internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            var validationResult = await validator.ValidateAsync(command, cancellationToken);
-            var valiidationResult = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
-            if (validationResult.Errors.Any())
-            {
-                throw new ValidationException(validationResult.Errors);
-            }
+         
 
             var product = command.Adapt<Product>();
           //var product = new Product
