@@ -11,11 +11,26 @@ services:
         - "5432"
       volumes:
         - postgres_catalog:/var/lib/postgresql/data/
+  basketdb:
+    image: postgres
+    environment:
+      - POSTGRES_DB=basketDb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5433"
+      - "5432"
+    volumes:
+      - postgres_basket:/var/lib/postgresql/data/
+
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=catalogDb;User Id=postgres;Password=postgres;
+    depends_on:
+       - catalogdb
     ports:
       - "8080"
       - "8081"
