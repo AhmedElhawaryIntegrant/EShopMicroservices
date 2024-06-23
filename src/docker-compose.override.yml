@@ -2,24 +2,25 @@ version: '3.4'
 
 services:
   catalogdb:
+      container_name: catalogdb
       image: postgres
       environment:
         - POSTGRES_DB=catalogDb
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=postgres
       ports:
-        - "5432"
+        - "5434:5432"
       volumes:
         - postgres_catalog:/var/lib/postgresql/data/
   basketdb:
+    container_name: basketdb
     image: postgres
     environment:
       - POSTGRES_DB=basketDb
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - "5433"
-      - "5432"
+      - "5433:5432"
     volumes:
       - postgres_basket:/var/lib/postgresql/data/
 
