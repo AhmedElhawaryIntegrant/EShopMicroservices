@@ -23,7 +23,11 @@ services:
       - "5433:5432"
     volumes:
       - postgres_basket:/var/lib/postgresql/data/
-
+  distributedcache:
+   container_name: distributedcache
+   restart: always
+   ports:
+      - "6379:6379"
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -33,8 +37,8 @@ services:
     depends_on:
        - catalogdb
     ports:
-      - "8080"
-      - "8081"
+      - "6000:8080"
+      - "6060:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
