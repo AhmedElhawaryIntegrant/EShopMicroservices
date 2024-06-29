@@ -36,6 +36,29 @@ namespace Discount.grpc.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Coupons");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 150,
+                            Description = "IPhone Discount",
+                            ProductName = "IPhone X"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 100,
+                            Description = "Samsung Discount",
+                            ProductName = "Samsung 10"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Amount = 50,
+                            Description = "Huawei Discount",
+                            ProductName = "Huawei P30"
+                        });
                 });
 #pragma warning restore 612, 618
         }
