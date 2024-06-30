@@ -11,15 +11,23 @@ namespace Discount.grpc.Services
     {
         public override async Task<CoupnModel> GetDiscount(DiscountRequest request, ServerCallContext context)
         {
-            var coupon = await discountContext.Coupons.FirstOrDefaultAsync(c => c.ProductName == request.ProductName);
-            if (coupon == null)
-            {
-               coupon = new Coupon { ProductName = "No Discount", Amount = 0, Description = "No Discount" };
-            }
-           logger.LogInformation($"Discount is retrieved for ProductName: {coupon.ProductName}, Amount: {coupon.Amount}");
-            var CouponModel = coupon.Adapt<CoupnModel>();
+            try
+            { 
+                var coupon = await discountContext.Coupons.FirstOrDefaultAsync(c => c.ProductName == request.ProductName);
+                if (coupon == null)
+                {
+                    coupon = new Coupon { ProductName = "No Discount", Amount = 0, Description = "No Discount" };
+                }
+                logger.LogInformation($"Discount is retrieved for ProductName: {coupon.ProductName}, Amount: {coupon.Amount}");
+                var CouponModel = coupon.Adapt<CoupnModel>();
 
-            return CouponModel;
+                return CouponModel;
+            }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Internal, $"Error while retrieving discount for ProductName: {request.ProductName}"));
+            }
+           
         }
 
         public override async Task<CoupnModel> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)

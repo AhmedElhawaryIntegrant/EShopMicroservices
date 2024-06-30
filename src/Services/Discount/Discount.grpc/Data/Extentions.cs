@@ -9,6 +9,9 @@ namespace Discount.grpc.Data
             using var scope = app.ApplicationServices.CreateScope();
             using var context = scope.ServiceProvider.GetRequiredService<DiscountContext>();
             context.Database.MigrateAsync();
+             context.Database.OpenConnectionAsync();
+            context.Database.ExecuteSqlRawAsync("PRAGMA journal_mode=DELETE");
+            context.Database.CloseConnectionAsync();
             return app;
         }
     }
