@@ -1,4 +1,5 @@
 ﻿using Basket.API.Data;
+using Discount.Grpc;
 
 namespace Basket.API.Basket.StoreBasket
 {
@@ -14,12 +15,22 @@ namespace Basket.API.Basket.StoreBasket
             RuleFor(x => x.Cart.UserName).NotNull().WithMessage("UserName can't be null");
         }
     }
-    public class StoreBasketHandler(IBasketRepository repository) : ICommandHandler<StoreBasketCommand, StoreBasketResult>
+    public class StoreBasketHandler(IBasketRepository repository, DiscountProtoService.DiscountProtoServiceClient discountProto) : ICommandHandler<StoreBasketCommand, StoreBasketResult>
     {
         public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
         {
+           await DeductDiscount(command.Cart, cancellationToken);
             await repository.StoreBasket(command.Cart, cancellationToken);
             return new StoreBasketResult(command.Cart.UserName);
+        }
+
+        public async Task DeductDiscount(ShoppingCart Cart, CancellationToken cancellationToken)
+        {
+            foreach (var item in Cart.Items)
+            {
+                var coupon = await discountProto.GetDiscountAsync(new DiscountRequest { ProductName = item.ProductName });
+                item.Price -= decimal.Parse(coupon.Amount.ToString());
+            }
         }
     }
     

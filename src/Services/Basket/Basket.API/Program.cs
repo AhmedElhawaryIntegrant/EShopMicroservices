@@ -4,6 +4,7 @@ using BuildingBlocks.Exceptions.Handler;
 using Carter;
 using FluentValidation;
 using HealthChecks.UI.Client;
+using Discount.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCarter();
@@ -28,6 +29,10 @@ builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis")!;
    
+});
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(o =>
+{
+    o.Address = new Uri(builder.Configuration["GrpcConfigs:DiscountUrl"]);
 });
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
