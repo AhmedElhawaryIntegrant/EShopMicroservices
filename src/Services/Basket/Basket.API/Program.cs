@@ -33,7 +33,14 @@ builder.Services.AddStackExchangeRedisCache(options =>
 builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(o =>
 {
     o.Address = new Uri(builder.Configuration["GrpcConfigs:DiscountUrl"]);
-});
+}).ConfigurePrimaryHttpMessageHandler(() =>
+{
+    var handler = new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    };
+    return handler;
+}) ;
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddHealthChecks()
