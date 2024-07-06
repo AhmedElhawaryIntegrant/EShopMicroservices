@@ -26,6 +26,49 @@ namespace Ordering.Domain.Models
         public OrderStatus Status { get; private set; } = OrderStatus.Pending;
 
         public decimal TotalPrice { get { return _orderItems.Sum(x => x.Price * x.Quantity); } private set { } }
+
+        public static Order Create(CustomerId customerId, OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment)
+        {
+            var order = new Order
+            {
+                Id = OrderId.Of(Guid.NewGuid()),
+                CustomerId = customerId,
+                OrderName = orderName,
+                ShippingAddress = shippingAddress,
+                BillingAddress = billingAddress,
+                Payment = payment,
+                Status = OrderStatus.Pending
+            };
+
+           // order.AddDomainEvent(new OrderCreatedDomainEvent(order.Id, order.CustomerId, order.OrderName, order.ShippingAddress, order.BillingAddress, order.Payment));
+
+            return order;
+        }
+
+        public void Update(OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment, OrderStatus status)
+        {
+            OrderName = orderName;
+            ShippingAddress = shippingAddress;
+            BillingAddress = billingAddress;
+            Payment = payment;
+            Status= status;
+        }
+
+        public void AddOrderItem(ProductId productId, int quantity, decimal price)
+        {
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+            _orderItems.Add(new OrderItem(Id, productId, quantity, price));
+        }
+
+        public void RemoveOrderItem(ProductId productId)
+        {
+            var orderItem = _orderItems.FirstOrDefault(x => x.ProductId == productId);
+            if (orderItem is not null)
+            {
+                _orderItems.Remove(orderItem);
+            }
+        }
           
     }
 }
