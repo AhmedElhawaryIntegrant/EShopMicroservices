@@ -34,7 +34,7 @@ namespace Ordering.Infrastructure.Data.Extensionsa
 
         private static async Task SeedProductAsync(AbblicationDbContext context)
         {
-            if (!context.Customers.Any())
+            if (!context.Products.Any())
             {
                 await context.Products.AddRangeAsync(InitialData.Products);
                 await context.SaveChangesAsync();
@@ -43,7 +43,7 @@ namespace Ordering.Infrastructure.Data.Extensionsa
 
         private static async Task SeedOrdersAsync(AbblicationDbContext context)
         {
-            if (!context.Customers.Any())
+            if (!context.Orders.Any())
             {
                 await context.Orders.AddRangeAsync(InitialData.OrdersWithItems);
                 await context.SaveChangesAsync();
