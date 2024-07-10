@@ -12,7 +12,7 @@ namespace Ordering.Domain.ValueObject
 
         public string CardHolderName { get; } = default!;
 
-        public DateTime Expiration { get; } = default!;
+        public string Expiration { get; } = default!;
 
         public string CVV { get; } = default!;
 
@@ -22,7 +22,7 @@ namespace Ordering.Domain.ValueObject
         {
         }
 
-        private Payment(string cardNumber, string cardHolderName, DateTime expiration, string cvv, int paymentMethod)
+        private Payment(string cardNumber, string cardHolderName, string expiration, string cvv, int paymentMethod)
         {
             CardNumber = cardNumber;
             CardHolderName = cardHolderName;
@@ -31,7 +31,7 @@ namespace Ordering.Domain.ValueObject
             PaymentMethod = paymentMethod;
         }
 
-        public static Payment Of(string cardNumber, string cardHolderName, DateTime expiration, string cvv, int paymentMethod)
+        public static Payment Of(string cardNumber, string cardHolderName, string expiration, string cvv, int paymentMethod)
         {
             ArgumentNullException.ThrowIfNull(cardNumber);
             ArgumentNullException.ThrowIfNull(cardHolderName);

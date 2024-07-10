@@ -27,11 +27,11 @@ namespace Ordering.Domain.Models
 
         public decimal TotalPrice { get { return _orderItems.Sum(x => x.Price * x.Quantity); } private set { } }
 
-        public static Order Create(CustomerId customerId, OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment)
+        public static Order Create(OrderId orderId,CustomerId customerId, OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment)
         {
             var order = new Order
             {
-                Id = OrderId.Of(Guid.NewGuid()),
+                Id = orderId,
                 CustomerId = customerId,
                 OrderName = orderName,
                 ShippingAddress = shippingAddress,
