@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Ordering.Infrastructure.Data.Extensions;
 
-namespace Ordering.Infrastructure.Data.Extensionsa
+namespace Ordering.Infrastructure.Data.Extensions
 {
     public static class DatabaseExtensions
     {
