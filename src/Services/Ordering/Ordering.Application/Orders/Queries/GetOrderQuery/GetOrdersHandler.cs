@@ -17,7 +17,7 @@ namespace Ordering.Application.Orders.Queries.GetOrderQuery
             var orders = await dbContext.Orders
                 .Include(o => o.OrderItems)
                 .AsNoTracking()
-                .OrderBy(o => o.OrderName)
+                .OrderBy(o => o.OrderName.Value)
                 .Skip(pageSize * pageIndex)
                 .Take(pageSize)
                 .ToListAsync(cancellationToken);

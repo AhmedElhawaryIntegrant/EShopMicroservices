@@ -15,11 +15,11 @@ namespace Ordering.API.EndPoints
                 var result = await sender.Send(command);
                 var response = result.Adapt<UpdateRecordResponse>();
                 return Results.Ok(response);
-            }).WithName("CreateOrder")
-            .Produces<UpdateRecordResponse>(StatusCodes.Status201Created)
+            }).WithName("UpdateOrder")
+            .Produces<UpdateRecordResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .WithSummary("Create Order")
-            .WithDescription("Create Order");
+            .WithSummary("Update Order")
+            .WithDescription("Update Order");
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Ordering.Infrastructure
 
             services.AddDbContext<AbblicationDbContext>((sp,options) =>
             {
+                options.AddInterceptors(new AuditableEntityInterceptor());
                 options.AddInterceptors(sp.GetService<ISaveChangesInterceptor>());
                 options.UseSqlServer(connectionString);
             });

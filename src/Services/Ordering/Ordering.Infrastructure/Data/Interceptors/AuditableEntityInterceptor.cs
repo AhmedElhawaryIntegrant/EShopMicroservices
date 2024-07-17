@@ -34,8 +34,8 @@ namespace Ordering.Infrastructure.Data.Interceptors
                 }
                 if (entry.State == EntityState.Added || entry.State== EntityState.Modified || entry.HasChangedOwnedEntities())
                 {
-                    entry.Entity.CreatedBy = "Ordering API";
-                    entry.Entity.CreatedAt = DateTime.UtcNow;
+                    entry.Entity.LastModifiedBy = "Ordering API";
+                    entry.Entity.LastModifiedAt = DateTime.UtcNow;
                 }
             }
         }
