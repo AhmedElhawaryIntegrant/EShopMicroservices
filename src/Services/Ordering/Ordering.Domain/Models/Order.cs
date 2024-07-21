@@ -41,7 +41,7 @@ namespace Ordering.Domain.Models
             };
 
            // order.AddDomainEvent(new OrderCreatedDomainEvent(order.Id, order.CustomerId, order.OrderName, order.ShippingAddress, order.BillingAddress, order.Payment));
-           order.AddDomainEvent(new OrderCreatedEvent());
+           order.AddDomainEvent(new OrderCreatedEvent(order));
             return order;
         }
 
@@ -53,7 +53,7 @@ namespace Ordering.Domain.Models
             Payment = payment;
             Status= status;
 
-            AddDomainEvent(new OrderUpdatedEvent());
+            AddDomainEvent(new OrderUpdatedEvent(this));
         }
 
         public void AddOrderItem(ProductId productId, int quantity, decimal price)
