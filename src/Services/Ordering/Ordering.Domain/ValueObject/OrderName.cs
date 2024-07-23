@@ -16,7 +16,7 @@ namespace Ordering.Domain.ValueObject
         public static OrderName Of(string value)
         {
             ArgumentNullException.ThrowIfNull(value);
-            ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, DefaultLength, "Order Name");
+           // ArgumentOutOfRangeException.ThrowIfLessThan(value.Length, DefaultLength, "Order Name");
             if (string.IsNullOrWhiteSpace(value))
             {
                 throw new DomainException("Order Name cannot be empty");
