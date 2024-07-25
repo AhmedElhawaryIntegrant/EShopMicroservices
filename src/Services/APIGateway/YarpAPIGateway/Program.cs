@@ -1,9 +1,18 @@
+using Microsoft.AspNetCore.RateLimiting;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("fixed", o =>
+    {
+        o.Window= TimeSpan.FromSeconds(10);
+        o.PermitLimit = 5;
+    });
+});
 var app = builder.Build();
-
+app.UseRateLimiter();
 app.MapReverseProxy();
-app.MapGet("/", () => "Hello World!");
+
 
 app.Run();
