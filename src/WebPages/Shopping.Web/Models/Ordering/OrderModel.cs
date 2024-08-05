@@ -22,7 +22,7 @@
 
     public record GetOrdersResponse(PaginatedResult<OrderModel> Orders);
 
-    public record GetOrderByNameResponse(IEnumerable<OrderModel> orders);
+    public record GetOrderByNameResponse(IEnumerable<OrderModel> Orders);
 
-    public record GetOrderByResponse(IEnumerable<OrderModel> orders);
+    public record GetOrderByResponse(IEnumerable<OrderModel> Orders);
 }
